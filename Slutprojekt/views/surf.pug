@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+    body 
+        h1 Latest Entry
+        if things
+            h2 #{things.username}
+            p Email: #{things.email}
+            p Password: #{things.password}
+            if things.alive  
+                p Den lever!
+            if things.owners
+                ul 
+                    each owner in things.owners 
+                        li #{owner}
+        else
+            p No entries found

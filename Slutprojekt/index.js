@@ -22,8 +22,37 @@ const thing = require("./models/Thing.js");
 const Thing = require("./models/Thing.js");
 
 app.get("/", (req, res) => {
-  res.render("index", { namn: "Jonas" });
+  data = {
+    title: "hej på dig",
+  }
+  res.render("index", data);
 });
+
+app.get("/surf", async (req, res) => {
+  const data = {
+    title: "All Things",
+    things: await thing.findOne().sort({ createdAt: -1 }).exec(),
+  };
+  res.render("surf", data);
+});
+
+app.get("/login", async (req, res) => {
+  const data = {
+    title: "All Things",
+    things: await thing.findOne({ email: 'jongus046@edu.linkoping.se' }).exec(),
+  };
+  res.render("login", data);
+});
+
+app.post("/login", async (req, res) => {
+  await thing.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  res.redirect("/surf");
+});
+
 
 
 app.listen(port, () => {
